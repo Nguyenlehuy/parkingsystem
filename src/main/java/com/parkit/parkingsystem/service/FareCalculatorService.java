@@ -1,5 +1,9 @@
 package com.parkit.parkingsystem.service;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
 import com.parkit.parkingsystem.constants.Fare;
 import com.parkit.parkingsystem.model.Ticket;
 
@@ -10,22 +14,40 @@ public class FareCalculatorService {
             throw new IllegalArgumentException("Out time provided is incorrect:"+ticket.getOutTime().toString());
         }
 
-        int inHour = ticket.getInTime().getHours();
-        int outHour = ticket.getOutTime().getHours();
+        LocalDateTime inTime = ticket.getInTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        LocalDateTime outTime = ticket.getOutTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 
-        //TODO: Some tests are failing here. Need to check if this logic is correct
-        int duration = outHour - inHour;
-
+        Duration duration  = Duration.between(inTime, outTime);
+        long durationMinutes = duration.toMinutes();
+       
+        long durationHour = duration.toHours();
+        
+        System.out.println("durationMinutes="+durationMinutes);
+        
+        System.out.println("durationHour="+durationHour);
+        double price;
+        double rate = 1; 
+        //<1H
+        if (durationHour == 0 && durationMinutes >0)  {
+        	rate = 0.75;
+        }else {
+        	rate = durationHour;
+        }
+        
         switch (ticket.getParkingSpot().getParkingType()){
             case CAR: {
-                ticket.setPrice(duration * Fare.CAR_RATE_PER_HOUR);
+                price = rate * Fare.CAR_RATE_PER_HOUR;
                 break;
             }
             case BIKE: {
-                ticket.setPrice(duration * Fare.BIKE_RATE_PER_HOUR);
+                price = rate * Fare.BIKE_RATE_PER_HOUR;
                 break;
             }
             default: throw new IllegalArgumentException("Unkown Parking Type");
         }
+        
+        
+        	
+        ticket.setPrice(price);	
     }
 }
