@@ -22,9 +22,9 @@ public class FareCalculatorService {
        
         long durationHour = duration.toHours();
         
-        System.out.println("durationMinutes="+durationMinutes);
+      
         
-        System.out.println("durationHour="+durationHour);
+   
         double price;
         double rate = 1; 
         //<1H
