@@ -76,11 +76,12 @@ public class ParkingDataBaseIT {
 		ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
 
 		parkingService.processExitingVehicle();
-
-		Mockito.verify(ticketDAO).updateTicket(ticket);
-		Mockito.verify(parkingSpotDAO).updateParking(parkingSpot);
+		
 		// check that the fare generated and out time are populated correctly in the
 		// database
+		Mockito.verify(ticketDAO).updateTicket(ticket);
+		Mockito.verify(parkingSpotDAO).updateParking(parkingSpot);
+		
 	}
 
 }

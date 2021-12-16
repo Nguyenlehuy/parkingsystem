@@ -10,8 +10,17 @@ public class Ticket {
     private double price;
     private Date inTime;
     private Date outTime;
+    private Boolean reUsed =false;
 
-    public int getId() {
+    public Boolean getReUsed() {
+		return reUsed;
+	}
+
+	public void setReUsed(Boolean reUsed) {
+		this.reUsed = reUsed;
+	}
+
+	public int getId() {
         return id;
     }
 
