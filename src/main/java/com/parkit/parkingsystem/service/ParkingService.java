@@ -35,7 +35,7 @@ public class ParkingService {
                 parkingSpot.setAvailable(false);
                 parkingSpotDAO.updateParking(parkingSpot);//allot this parking space and mark it's availability as false
                 //STORY2
-                //CHeck if the vehicle has entered it previously
+                //Check if the vehicle has entered it previously
                 
                 
                
